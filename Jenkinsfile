@@ -7,12 +7,14 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/chongbao01/HotelManagementSystem.git'
             }
         }
-        stage('Build') {
+        stages{
+            stage('Build') {
             steps {
 
                     bat ‘start gradlew build’
                 
             }
+        }
         }
         stage('Test') {
             steps {
