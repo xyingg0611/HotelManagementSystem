@@ -24,7 +24,7 @@ pipeline {
             }
             post {
                 always {
-                    junit '../HotelManagementSystem-master\AssignmentTest\src\test\java\my\edu\utar.xml'
+                    junit '../HotelManagementSystem-master/AssignmentTest/src/test/java/my/edu/utar.xml'
                 }
             }
         }
