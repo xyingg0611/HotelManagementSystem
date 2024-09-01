@@ -28,7 +28,7 @@ For the following process, please refer to **Set Up The Enviroment**.
 7. Now you can see the project file on the right-hand side in Eclipse.
 
 **Reminder**
-1. If your libary dependency is below JAVA-SE18, you have to change to Java System Libary (JAVA SE-20).
+1. If your libRary dependency is below JAVA-SE18, you have to change to Java System Libary (JAVA SE-20).
 
 
 
