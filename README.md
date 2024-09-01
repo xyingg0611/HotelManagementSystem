@@ -95,143 +95,61 @@ Unit testing is a software testing technique where individual components or func
 ## Integration Test
 1.	The @RunWith(JUnitParamsRunner.class) annotation is used in JUnit testing to specify a custom runner class that will execute the test class. In this case, the JUnitParamsRunner is a runner provided by the JUnitParams library, which is used to support parameterized tests in JUnit.
 
-2.	For run the integration test , we will use the @Before and @After annotations in the test method.
-
-
-3.	The @Before annotation in JUnit is used to specify a method that should be executed before each test method in the test class. This method is often used to set up the test environment, initialize data, or configure necessary resources to ensure that each test starts from a known and consistent state.
+2.	To run the integration test , we will using mockito, it is required to include the jar_files posted above to carry out the testing.
 
 ```java
-@Before
-	public void setUpTests() {
-		//this is to set up the availablerooms.txt file to 5,5,5 Before each test
-		try {
-	    	PrintWriter pw = new PrintWriter("availablerooms.txt");
-	    	pw.println("5,5,5");
-	    	pw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	@Test(expected=IllegalArgumentException.class)
+	@Parameters({
+		//numRoomsToBook,expectedVipRoomCount,expectedDeluxeRoomCount,expectedStandardRoomCount
+		"marry, VIP, false,4",
+	    "jerry, VIP, false,-2",
+	    "janice, NORMAL, false,3",
+	    "siti, NON_MEMBER, false,2",
+	})
+	public void testInvalidSetBooking(String username, String memberType, boolean reward, int numBook) {
+	    // Create a user with an invalid type
+	    User user = new User(username,memberType,reward);
 
+	    // Create a Booking instance with the invalid user
+	    Booking booking = new Booking(user);
+	    
+	    // Create mocks for WaitingList and Room
+	    WaitingList waitingList = new WaitingList();
+	    Room mockRoom = mock(Room.class);
+
+	    // Attempt to book rooms with the invalid user, which should throw an IllegalArgumentException
+	    booking.setBooking(numBook, mockRoom, waitingList);
 	}
+	@Test
+	@Parameters({
+	    "juanhong, VIP, false,0,0,0",
+	    "janice, NORMAL, false,0,0,0",
+	    "siti, NON_MEMBER, false,0,0,0",
 
-4.	The @After annotation in JUnit is used to specify a method that should be executed after each test method in the test class. This method is often used for cleanup activities or to reset the test environment to a consistent state, ensuring that tests do not interfere with each other.
-
-
-@After
-	public void afterTests() {
-		try {
-			//this is to reset the availablerooms.txt file to 5,5,5 after each test
-	    	PrintWriter pw = new PrintWriter("availablerooms.txt");
-	    	pw.println("5,5,5");
-	    	pw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	User vip1 = new User("xy","VIP");
-	User vip2 = new User("as","VIP");
-	User vip3 = new User("ch","VIP");
-	User vip4 = new User("ws","VIP");
-	User vip5 = new User("jason","VIP");
-	User vip6 = new User("jasmine","VIP");
-	User normal1 = new User("nor1", "normal");
-	User normal2 = new User("nor2", "normal");
-	User normal3 = new User("nor3", "normal");
-	User normal4 = new User("nor4", "normal");
-	User normal5 = new User("nor5", "normal");
-	User normal6 = new User("nor6", "normal");
-	User guest1 = new User("guest1", "guest");
-	User guest2 = new User("guest2", "guest");
-	User guest3 = new User("guest3", "guest");
-	User guest4 = new User("guest4", "guest");
-	User guest5 = new User("guest5", "guest");
-	User guest6 = new User("guest6", "guest");
-	
-
-	//this test will mock the ConsoleUtilities class in order to fix the answer to "y" when user is prompted to cancel.
-	//booking
-	//Asusual, we will assume every user book the maximum allowed number of rooms to truly test the reliability. 
-	//potential of the hotel room booking system
-	@Test//no1
-	@Parameters(method = "getParamsForTestBookingAndCancel")
-	public void testBookingAndCancel(User[] users, User[] usersCancelBooking, User[] expectedRemainingUsersInWL, User[] usersBookingPendingStillTrue) {
-		ConsoleUtilities cuMock = mock(ConsoleUtilities.class);
-		when(cuMock.nextLine()).thenReturn("y");
-	 	WaitingList wl = new WaitingList(cuMock);
-	 		
-	 	for(User user : users)
-	 	{
-	 		boolean bookingOutcome = user.bookRooms(user.getMaxRooms());
-	 		if(!bookingOutcome)
-	 		{
-	 			wl.addWaiting(user, user.getMaxRooms());
-	 		}
-	 	}
-	 	
-	 	ArrayList<User> actualUsersLeftInWL = new ArrayList<User>();
-	 	for(User user : usersCancelBooking)
-	 	{
-	 	/*
-	 	* cancelOutcome will check if the user was placed on the waiting list.
-	 	* if yes, it will remove the user from the WL and return a true boolean value.
-	 	* which will then be tested to see whether the user has been removed from the WL ArrayList.
-	 	* if not, it will return a false boolean value, and will proceed to cancel the successfully placed booking.
-	 	* which will then be tested whether their previous successfully placed booking pending status is set to false.
-	 	*/
-	 		boolean cancelBookingFromWL = wl.removeWaiting(user);
-	 		if(!cancelBookingFromWL)
-	 		{
-	 			for(int x = 0; x < user.getBookings().size(); x++) {
-	 				user.getBookings().get(x).cancelBooking();
-	 				assertFalse(user.getBookings().get(x).isPending());
-	 			}
-	 		}
-	 	}
-			if(wl.getVipWaiting().size()>0)
-			{
-				for(int x = 0; x < wl.getVipWaiting().size(); x++)
-					actualUsersLeftInWL.add(wl.getVipWaiting().get(x));
-			}
-			if(wl.getMemberWaiting().size()>0)
-			{
-				for(int x = 0; x < wl.getMemberWaiting().size(); x++)
-					actualUsersLeftInWL.add(wl.getMemberWaiting().get(x));
-			}
-			if(wl.getNormalWaiting().size()>0)
-			{
-				for(int x = 0; x < wl.getNormalWaiting().size(); x++)
-					actualUsersLeftInWL.add(wl.getNormalWaiting().get(x));
-			}
-			User [] actualUsersLeftArray = new User[actualUsersLeftInWL.size()];
-			actualUsersLeftArray = actualUsersLeftInWL.toArray(actualUsersLeftArray);
-			assertArrayEquals(expectedRemainingUsersInWL, actualUsersLeftArray);
-	 	for(int x = 0; x < usersBookingPendingStillTrue.length; x++)
-	 	{
-	 			assertTrue(usersBookingPendingStillTrue[x].getBookings().get(0).isPending());
-	 	}
-	}
-	
-	 private Object[] getParamsForTestBookingAndCancel() {
-	    	return new Object[] {
-	    			//1st parameter: the users that want to book rooms
-	    			//2nd parameter: the selected users who want to cancel booking
-	    			//3rd parameter: the remaining users who are still in Waiting List
-	    			//4th parameter: the users whose successfully placed a booking, but didn't cancel
-	    			new Object[] {
-	    					new User[] {vip1, vip2, vip3, vip4, vip5, vip6}, 
-	    					new User[] {vip5, vip6}, 
-	    					new User[] {},
-	    					new User[] {vip1, vip2, vip3, vip4}
-	    			},
-	    			new Object[] {
-	    					new User[] {vip1, vip2, normal1, normal2, normal3, vip6, guest1, normal4, guest4, vip5}, 
-	    					new User[] {guest1, vip6, normal4}, 
-	    					new User[] {vip5, guest4},
-	    					new User[] {vip1, vip2, normal1, normal2, normal3}
-	    			}
-	    	};
+	})
+    public void testCancelBooking(String username, String userType, boolean rewardStatus,
+    		 int expectedVipWaitingListCount,int expectedStandardWaitingListCount, int expectedDeluxeWaitingListCount) {
+        // Create a user for the booking
+        User user = new User(username, userType, rewardStatus);
+        
+        // Create a WaitingList object
+        WaitingList waitingList = new WaitingList();
+        
+        // Add the user to the waiting list
+        waitingList.addWaiting(user);
+        
+        // Create a Booking object
+        Booking booking = new Booking(user);
+        
+        // Call the cancelBooking method
+        booking.cancelBooking(waitingList);
+        
+        // Verify that the waiting list no longer contains the user
+	    assertEquals(expectedVipWaitingListCount, waitingList.getVipWaitingList().size());
+	    assertEquals(expectedDeluxeWaitingListCount, waitingList.getMemberWaitingList().size());
+	    assertEquals(expectedStandardWaitingListCount, waitingList.getNormalWaitingList().size());
 	    }
-}
+
 ```
 ## Additional Notes
 There are other testing classes and you can explore them! Good Luck!!!!
