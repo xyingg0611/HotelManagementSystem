@@ -11,7 +11,7 @@ pipeline {
             stage('Build') {
             steps {
 
-                    bat ‘start gradlew build’
+                    bat 'gradle build'
                 
             }
         }
@@ -19,13 +19,21 @@ pipeline {
         stage('Test') {
             steps {
                 
-                     bat ‘start gradlew test’
+                     bat 'gradle test'
                   
             }
         }
         stage('Deploy') {
             steps {                
-                    powershell 'java -jar build/libs/HotelManagementSystem.jar'
+                    script {
+                    // Build the Docker image
+                    docker.build('hotelmanagement:latest', '-f Dockerfile .')
+                    
+                    // Run the Docker container
+                    docker.image('hotelmanagement:latest').run(
+                        '-p 8080:8080 --name hotelmanagement-container'
+                    )
+                }
                  }           
         }
     
