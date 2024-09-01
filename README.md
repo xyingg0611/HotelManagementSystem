@@ -71,25 +71,21 @@ Unit testing is a software testing technique where individual components or func
 
 3.	Example code:
 ```java
-//test the setRoomsWishToBook
-    @Test
-    @Parameters({"guest, 1, 1", "normal, 2, 2", "VIP, 3, 3"})
-    public void setRoomWishToBookWithValid(String member_type, int count, int expectedResult) {
-        User u = new User("TestUser", member_type); // Create a User object with a name and member type
-        u.setRoomsWishToBook(count); 
-        assertEquals(expectedResult, u.getRoomsWishToBook()); 
-    }
+	@Test
+	public void testGetRewardStatus() {
+		// "false" will be compared with user.getRewardStatus()
+		Boolean AR = user.getRewardStatus();
+		Boolean ER = false;
+		assertEquals(AR,ER);
+	}
 
- //test set name
-    @Test
-    @Parameters({"Jason,Jason","Emily,Emily"})
-    public void setNameWithValid(String name,String expectedResult)
-    {
-    	//User u = new User("TestUser", "member");
-    	u.setName(name);
-    	String actualResult = u.getName();
-    	assertEquals(expectedResult,actualResult);
-    }
+	@Test
+	public void testSetRewardStatus() {
+		// change the reward status to true
+		user.setRewardStatus(true);
+		// test if the change is success
+		assertTrue(user.getRewardStatus());
+	}
 ```
 4.	To view if the testing method is valid or invalid, we can click the green icon for run. Then it will show the result green color means valid or successful, red color means invalid or unsuccessful.
 <img width="479" alt="Screenshot 2024-09-01 at 1 44 11 PM" src="https://github.com/user-attachments/assets/447a324c-206e-410b-9310-b6e2c5e219e7">
