@@ -1,0 +1,17 @@
+# Use OpenJDK 20 image as the base image
+FROM openjdk:20
+
+# Create a new directory in the container for the application files
+RUN mkdir /hotelmanagementapp
+
+# Copy the application files from the host machine to the container
+COPY ./AssignmentTest /hotelmanagementapp
+
+# Set the working directory inside the container
+WORKDIR /hotelmanagementapp
+
+# Compile the Java source files (optional if not already compiled)
+# RUN javac my/edu/utar/*.java
+
+# Run the main class of the application
+CMD ["java", "my.edu.utar.App"]

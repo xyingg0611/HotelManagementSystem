@@ -1,0 +1,14 @@
+John VIP 1
+Juanhong VIP 3
+Janice NORMAL 2
+Marry NON_MEMBER 1
+Juanhong VIP 1
+Juanhong VIP 3
+Janice NORMAL 1
+Janice NORMAL 2
+Marry NON_MEMBER 1
+Juanhong VIP 1
+Juanhong VIP 3
+Janice NORMAL 1
+Janice NORMAL 2
+Marry NON_MEMBER 1

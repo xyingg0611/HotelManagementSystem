@@ -1,0 +1,1 @@
+{"virtualbox":{"/website":{"guestpath":"/website","hostpath":"C:/HotelManagementSystem-master/test","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/HotelManagementSystem-master","disabled":false,"__vagrantfile":true}}}
