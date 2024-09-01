@@ -28,7 +28,7 @@ For the following process, please refer to **Set Up The Enviroment**.
 7. Now you can see the project file on the right-hand side in Eclipse.
 
 **Reminder**
-1. If your libRary dependency is below JAVA-SE18, you have to change to Java System Libary (JAVA SE-20).
+1. If your library dependency is below JAVA-SE18, you have to change to Java System Libary (JAVA SE-20).
 
 
 
@@ -44,7 +44,7 @@ Junit is a widely used testing framework for Java programming. It helps develope
 ## Set Up The Environment
 1.	Eclipse contains the JUnit package to create a JUnit test.
 
-2.	The library can be added during the creation of class using the wizard. If we want to add it later, **right-click** on project name in the packges explorer and select **Build Path -> Add Libraries**.
+2.	The library can be added during the creation of class using the wizard. If we want to add it later, **right-click** on project name in the packages explorer and select **Build Path -> Add Libraries**.
 
 3.	Select the JUnit from the list. Then, click **[Next]**
 
