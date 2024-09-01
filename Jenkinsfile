@@ -46,7 +46,7 @@ post {
         }
         success {
             echo 'Build succeeded!!'
-            // You could add notification steps here, e.g., send an email
+            // You could add notification steps here, e.g, send an email
         }
         failure {
             echo 'Build failed!!'
