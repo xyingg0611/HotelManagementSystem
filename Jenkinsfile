@@ -1,20 +1,11 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
+   stages {  // This block must be directly inside pipeline
+        stage('Build') {
             steps {
-                git branch: 'master', url: 'https://github.com/chongbao01/HotelManagementSystem.git'
+                bat 'gradle build'
             }
-        }
-        stages{
-            stage('Build') {
-            steps {
-
-                    bat 'gradle build'
-                
-            }
-        }
         }
         stage('Test') {
             steps {
