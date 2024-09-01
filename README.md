@@ -1,96 +1,328 @@
-package shellsort;
+# HotelBookingSystem
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
+# Installs
 
-public class shellSort {
-	
-	public static void main(String[] args) {
-		shellSortArrayList();
-		//shellSortLinkedList();
-		//shellSortCompareNumber();
-	}
-	
-	public static void shellSortArrayList() {
-		//create ArrayList
-		ArrayList <String> numList = new ArrayList<>();
-		
-		//read file
-		try(BufferedReader br = new BufferedReader (new FileReader("largenumberdataset.txt"))){
-			String line;
-			
-			while ((line = br.readLine())!= null) {
-				numList.add(line);
-			}
-		}catch (IOException e) {
+1. Go to this website to download Eclipse:
+https://www.eclipse.org/downloads/
+   - **Using Eclipse will be much easier to perfome testing compare to other compiler.**
+   - The link below contains the guideline to complete the downloading process : https://www.eclipse.org/downloads/packages/installer
+
+2. Go to  this website to download VMware:
+https://www.vmware.com/info/workstation-player/evaluation
+   - **VMware is a vitual machine is a virtualization and cloud computing software provider.** 
+User can us VMware to gain asses to Windows10 to Windows 11.
+   - The link below contains the guideline to install and use VMware:
+https://www.youtube.com/watch?v=cygsGM5sNJo
+
+# Prerequisite
+**Junit4 and Jar files must be installed and set up properly**
+For the following process, please refer to **Set Up The Enviroment**.
+
+# Set Up
+1. Download all the files provided onto your desktop.
+2. Open your Eclipse.
+3. On the top left-hand corner, you can see **File**; click on it.
+4. Next, click on **import**.
+5. Click **Next** and choose **Browse**. (This will lead you into your directory and select the folder you had downloaded just now.)
+6. Click **Finish**.
+7. Now you can see the project file on the right-hand side in Eclipse.
+
+**Reminder**
+1. If your libary dependency is below JAVA-SE18, you have to change to Java System Libary (JAVA SE-20).
+
+
+
+
+# Test Description
+
+Junit is a widely used testing framework for Java programming. It helps developers swrite and run tests for their code, ensuring that individual units of functionality work as intended.
+
+## Installed jar files
+1.	Provide the jar file
+2.	Install the jar file on your own laptop or PC it will be use after this.
+
+## Set Up The Environment
+1.	Eclipse contains the JUnit package to create a JUnit test.
+
+2.	The library can be added during the creation of class using the wizard. If we want to add it later, **right-click** on project name in the packges explorer and select **Build Path -> Add Libraries**.
+
+3.	Select the JUnit from the list. Then, click **[Next]**
+
+4. Select JUnit 4 and then **[Finish]**, You should see the JUnit library has been added into the project in the package explorer.
+
+5. The **jar file** can be added during the creation of class using the wizard. If we want to add it later, right-click on project name in the package explorer and select confugure build path.
+
+6.	Select Add External JARs at **right hand side.**
+
+7.	Select **All** the jar file on your desktop file, then click **open**.
+
+8.	After that, we can see the jar that we selected was shown in the library. Then click **Apply and Close** at the right bottom.
+
+9.	You also may check the library and jar file that are added on the left-hand side.
+
+10.	Once we set up the testing environment , we are able to conduct unit testing, integration testing and test suite
+
+## Unit Test
+Unit testing is a software testing technique where individual components or functions of a program are tested in isolation to ensure they work as expected. These tests are typically automated and focus on verifying the correctness of specific parts of the code, often called "units."
+
+1.	The @RunWith(JUnitParamsRunner.class) annotation is used in JUnit testing to specify a custom runner class that will execute the test class. In this case, the JUnitParamsRunner is a runner provided by the JUnitParams library, which is used to support parameterized tests in JUnit.
+
+2.	To make the method will run in test, there must be an @Test before the method.
+
+3.	Example code:
+```java
+//test the setRoomsWishToBook
+    @Test
+    @Parameters({"guest, 1, 1", "normal, 2, 2", "VIP, 3, 3"})
+    public void setRoomWishToBookWithValid(String member_type, int count, int expectedResult) {
+        User u = new User("TestUser", member_type); // Create a User object with a name and member type
+        u.setRoomsWishToBook(count); 
+        assertEquals(expectedResult, u.getRoomsWishToBook()); 
+    }
+
+ //test set name
+    @Test
+    @Parameters({"Jason,Jason","Emily,Emily"})
+    public void setNameWithValid(String name,String expectedResult)
+    {
+    	//User u = new User("TestUser", "member");
+    	u.setName(name);
+    	String actualResult = u.getName();
+    	assertEquals(expectedResult,actualResult);
+    }
+```
+4.	To view if the testing method is valid or invalid, we can click the green icon for run. Then it will show the result green color means valid or successful, red color means invalid or unsuccessful.
+![image](https://github.com/user-attachments/assets/a527d434-524a-4ce8-9318-c2650606b907)
+
+![image](https://github.com/user-attachments/assets/4b46a6af-b0c7-4946-82e0-0427e81fe3fd)
+
+## Integration Test
+1.	The @RunWith(JUnitParamsRunner.class) annotation is used in JUnit testing to specify a custom runner class that will execute the test class. In this case, the JUnitParamsRunner is a runner provided by the JUnitParams library, which is used to support parameterized tests in JUnit.
+
+2.	For run the integration test , we will use the @Before and @After annotations in the test method.
+
+
+3.	The @Before annotation in JUnit is used to specify a method that should be executed before each test method in the test class. This method is often used to set up the test environment, initialize data, or configure necessary resources to ensure that each test starts from a known and consistent state.
+
+```java
+@Before
+	public void setUpTests() {
+		//this is to set up the availablerooms.txt file to 5,5,5 Before each test
+		try {
+	    	PrintWriter pw = new PrintWriter("availablerooms.txt");
+	    	pw.println("5,5,5");
+	    	pw.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("Numbers: ");
-		for (String number : numList) {
-			System.out.println(number);
-		}
-		//convert array list to array
-		String [] numArrayList = numList.toArray(new String[0]);
-		
-		//sorting method
-		shellSort.shellSort(numArrayList);
-		
-		ArrayList<String> sortedNumArray = new ArrayList<>();
-		for (String number : numArrayList) {
-			sortedNumArray.add(number);
-		}
-		
-		System.out.println("Sorted Number: ");
-		for (String number : numArrayList) {
-			System.out.println(number);
-		}
+
 	}
 
-	 /* An utility function to print array of size n*/
-    static void printArray(int arr[])
-    {
-        int n = arr.length;
-        for (int i=0; i<n; ++i)
-            System.out.print(arr[i] + " ");	 			
-        System.out.println();
-    }
-    
-    /* function to sort arr using shellSort */
-    public static void shellSort(String arr[])
-    {
-        int n = arr.length;
-
-        // Start with a big gap, then reduce the gap
-        for (int gap = n/2; gap > 0; gap /= 2)
-        {
-            // Do a gapped insertion sort for this gap size.
-            // The first gap elements a[0..gap-1] are already
-            // in gapped order keep adding one more element
-            // until the entire array is gap sorted
-            for (int i = 1; i < n; i ++)
-            {
-                // add a[i] to the elements that have been gap
-                // sorted save a[i] in temp and make a hole at
-                // position i
-                String temp = arr[i];
-
-                // shift earlier gap-sorted elements up until
-                // the correct location for a[i] is found
-                int j;
-                for (j = i; j >= gap && arr[j - gap].compareTo(temp) > 0; j -= gap)
-                    arr[j] = arr[j - gap];
-
-                // put temp (the original a[i]) in its correct
-                // location
-                arr[j] = temp;
-            }
-        }
-        return; 
-    }
+4.	The @After annotation in JUnit is used to specify a method that should be executed after each test method in the test class. This method is often used for cleanup activities or to reset the test environment to a consistent state, ensuring that tests do not interfere with each other.
 
 
+@After
+	public void afterTests() {
+		try {
+			//this is to reset the availablerooms.txt file to 5,5,5 after each test
+	    	PrintWriter pw = new PrintWriter("availablerooms.txt");
+	    	pw.println("5,5,5");
+	    	pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	User vip1 = new User("xy","VIP");
+	User vip2 = new User("as","VIP");
+	User vip3 = new User("ch","VIP");
+	User vip4 = new User("ws","VIP");
+	User vip5 = new User("jason","VIP");
+	User vip6 = new User("jasmine","VIP");
+	User normal1 = new User("nor1", "normal");
+	User normal2 = new User("nor2", "normal");
+	User normal3 = new User("nor3", "normal");
+	User normal4 = new User("nor4", "normal");
+	User normal5 = new User("nor5", "normal");
+	User normal6 = new User("nor6", "normal");
+	User guest1 = new User("guest1", "guest");
+	User guest2 = new User("guest2", "guest");
+	User guest3 = new User("guest3", "guest");
+	User guest4 = new User("guest4", "guest");
+	User guest5 = new User("guest5", "guest");
+	User guest6 = new User("guest6", "guest");
+	
+
+	//this test will mock the ConsoleUtilities class in order to fix the answer to "y" when user is prompted to cancel.
+	//booking
+	//Asusual, we will assume every user book the maximum allowed number of rooms to truly test the reliability. 
+	//potential of the hotel room booking system
+	@Test//no1
+	@Parameters(method = "getParamsForTestBookingAndCancel")
+	public void testBookingAndCancel(User[] users, User[] usersCancelBooking, User[] expectedRemainingUsersInWL, User[] usersBookingPendingStillTrue) {
+		ConsoleUtilities cuMock = mock(ConsoleUtilities.class);
+		when(cuMock.nextLine()).thenReturn("y");
+	 	WaitingList wl = new WaitingList(cuMock);
+	 		
+	 	for(User user : users)
+	 	{
+	 		boolean bookingOutcome = user.bookRooms(user.getMaxRooms());
+	 		if(!bookingOutcome)
+	 		{
+	 			wl.addWaiting(user, user.getMaxRooms());
+	 		}
+	 	}
+	 	
+	 	ArrayList<User> actualUsersLeftInWL = new ArrayList<User>();
+	 	for(User user : usersCancelBooking)
+	 	{
+	 	/*
+	 	* cancelOutcome will check if the user was placed on the waiting list.
+	 	* if yes, it will remove the user from the WL and return a true boolean value.
+	 	* which will then be tested to see whether the user has been removed from the WL ArrayList.
+	 	* if not, it will return a false boolean value, and will proceed to cancel the successfully placed booking.
+	 	* which will then be tested whether their previous successfully placed booking pending status is set to false.
+	 	*/
+	 		boolean cancelBookingFromWL = wl.removeWaiting(user);
+	 		if(!cancelBookingFromWL)
+	 		{
+	 			for(int x = 0; x < user.getBookings().size(); x++) {
+	 				user.getBookings().get(x).cancelBooking();
+	 				assertFalse(user.getBookings().get(x).isPending());
+	 			}
+	 		}
+	 	}
+			if(wl.getVipWaiting().size()>0)
+			{
+				for(int x = 0; x < wl.getVipWaiting().size(); x++)
+					actualUsersLeftInWL.add(wl.getVipWaiting().get(x));
+			}
+			if(wl.getMemberWaiting().size()>0)
+			{
+				for(int x = 0; x < wl.getMemberWaiting().size(); x++)
+					actualUsersLeftInWL.add(wl.getMemberWaiting().get(x));
+			}
+			if(wl.getNormalWaiting().size()>0)
+			{
+				for(int x = 0; x < wl.getNormalWaiting().size(); x++)
+					actualUsersLeftInWL.add(wl.getNormalWaiting().get(x));
+			}
+			User [] actualUsersLeftArray = new User[actualUsersLeftInWL.size()];
+			actualUsersLeftArray = actualUsersLeftInWL.toArray(actualUsersLeftArray);
+			assertArrayEquals(expectedRemainingUsersInWL, actualUsersLeftArray);
+	 	for(int x = 0; x < usersBookingPendingStillTrue.length; x++)
+	 	{
+	 			assertTrue(usersBookingPendingStillTrue[x].getBookings().get(0).isPending());
+	 	}
+	}
+	
+	 private Object[] getParamsForTestBookingAndCancel() {
+	    	return new Object[] {
+	    			//1st parameter: the users that want to book rooms
+	    			//2nd parameter: the selected users who want to cancel booking
+	    			//3rd parameter: the remaining users who are still in Waiting List
+	    			//4th parameter: the users whose successfully placed a booking, but didn't cancel
+	    			new Object[] {
+	    					new User[] {vip1, vip2, vip3, vip4, vip5, vip6}, 
+	    					new User[] {vip5, vip6}, 
+	    					new User[] {},
+	    					new User[] {vip1, vip2, vip3, vip4}
+	    			},
+	    			new Object[] {
+	    					new User[] {vip1, vip2, normal1, normal2, normal3, vip6, guest1, normal4, guest4, vip5}, 
+	    					new User[] {guest1, vip6, normal4}, 
+	    					new User[] {vip5, guest4},
+	    					new User[] {vip1, vip2, normal1, normal2, normal3}
+	    			}
+	    	};
+	    }
 }
+```
+## Additional Notes
+There are other testing classes and you can explore them! Good Luck!!!!
+
+# Build Configuration with Gradle
+## Prerequisites
+1.	Install Gradle
+-	Ensure Gradle is installed on your system. You can download it from https://docs.gradle.org/current/userguide/installation.html#ex-installing-manually
+
+2.	Install java
+-	Ensure JDK is installed on your system, version acceptable are JDK 17 and JDK 20. Also if there is latest version of JDK is acceptable.
+-	Download link refer https://www.oracle.com/my/java/technologies/downloads/#jdk22-windows
+
+Steps:
+1.	Navigate to the project directory
+-	Open command prompt
+-	Use cd to navigate ‘SoftwareTestingAssignment’ directory
+-	cd path\to\SoftwareTestingAssignment
+
+2.	Create the ‘build.gradle’ file
+-	Use text editor like notepad to create the ‘build.gradle’ file
+-	Write the below code in the ‘build.gradle’ file
+-	![image](https://github.com/user-attachments/assets/bb8a8f23-19e5-44b4-8451-78df6ffc44cd)
+-	After done enter the code, save the file in the ‘SoftwareTestingAssignment’ directory
+  
+3.	Directory structure
+-	Ensure the ‘SoftwareTestingAssignment’’ directory has the following structure
+-	![image](https://github.com/user-attachments/assets/53358749-3642-4456-8b43-90acb6f2dd0e)
+-	Command for use check the project directory (dir build.gradle OR dir)
+  
+4.	Run Gradle command
+-	gradle init
+-	（a)Select Application as type of build and
+-	 (b)Select the implementation language as Java.
+-	 (c)Then, enter the appropriate Java version (max 21)
+-	 (d)Select single application project as application structure.
+-	 (e)Select Kotlin as build script DSL
+-	 (f)select J Unit 4 for the test framework.
+  
+5.	Compile code
+-	gradle build
+
+6. 	Run the test
+-	gradle test
+
+# Deployment
+How to deploy the JAVA program on the GitHub by using Git
+
+Steps
+1. Downlaod Git from official website
+   https://git-scm.com/download/win .
+2. Set up the Git  which you can find git bash in your Start menu after installation.
+3. Set Up your name and email address, which will be used for commit messages .
+4. Run these commands in Git Bash:
+```
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```
+5. Create new repository on GitHub
+6. Initialize your local repository
+```
+cd path/to/your/project
+```
+- initialize git
+```
+git init
+```
+
+7. Add and commit the files
+```
+git add .
+git commit -m "Initial commit"
+```
+
+8. Add remote Reposiory, go to your GitHub repository page, and find the URL under the "Code button" Copy the URL
+```
+git remote add origin https://github.com/username/repository.git
+```
+replace "https://github.com/username/repository.git" with your copies URL
+
+10. Push to GitHub
+   ```
+   git push -u origin master
+   ```
+   if you're using a different branch(main), replace 'master' with 'main'
+
+
+
+
+
