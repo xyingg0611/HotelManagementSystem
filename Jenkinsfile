@@ -22,6 +22,11 @@ pipeline {
                      bat 'gradle test'
                   
             }
+            post {
+                always {
+                    junit '../HotelManagementSystem-master\AssignmentTest\src\test\java\my\edu\utar.xml'
+                }
+            }
         }
         stage('Deploy') {
             steps {                
@@ -31,7 +36,7 @@ pipeline {
                     
                     // Run the Docker container
                     docker.image('hotelmanagement:latest').run(
-                        '-p 8080:8080 --name hotelmanagement-container'
+                        '-p 8083:8080 --name hotelmanagement-container'
                     )
                 }
                  }           
