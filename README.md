@@ -92,7 +92,7 @@ Unit testing is a software testing technique where individual components or func
     }
 ```
 4.	To view if the testing method is valid or invalid, we can click the green icon for run. Then it will show the result green color means valid or successful, red color means invalid or unsuccessful.
-![image](https://github.com/user-attachments/assets/a527d434-524a-4ce8-9318-c2650606b907)
+<img width="479" alt="Screenshot 2024-09-01 at 1 44 11 PM" src="https://github.com/user-attachments/assets/447a324c-206e-410b-9310-b6e2c5e219e7">
 
 ![image](https://github.com/user-attachments/assets/4b46a6af-b0c7-4946-82e0-0427e81fe3fd)
 
