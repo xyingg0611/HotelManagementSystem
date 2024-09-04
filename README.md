@@ -152,7 +152,7 @@ Unit testing is a software testing technique where individual components or func
 
 ```
 ## Additional Notes
-There are other testing classes and you can explore them! Good Luck!!!!
+There are other testing classes and you can explore them! Good Luck!
 
 # Build Configuration with Gradle
 ## Prerequisites
