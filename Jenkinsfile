@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent any //
 
    stages {  // This block must be directly inside pipeline
         stage('Build') {
@@ -7,7 +7,7 @@ pipeline {
                 bat 'gradle build'
             }
         }
-        stage('Test') {
+        stage('Test') { 
             steps {
                 
                      bat 'gradle test'
