@@ -1,4 +1,4 @@
-pipeline {
+pipeline { //
     agent any
 
    stages {  // This block must be directly inside pipeline
