@@ -20,4 +20,4 @@ Juanhong,VIP,false,-5
 Juanhong,VIP,false,5
 Janice,NORMAL,false,5
 Marry,NON_MEMBER,false,5
-Marry,NON_MEMBER,false,0
+Marry,NON_MEMBER,false,1

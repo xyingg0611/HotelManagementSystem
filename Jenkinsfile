@@ -1,5 +1,5 @@
 pipeline {
-    agent any //
+    agent any 
 
    stages {  // This block must be directly inside pipeline
         stage('Build') {
