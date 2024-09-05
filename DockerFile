@@ -13,5 +13,5 @@ WORKDIR /hotelmanagementapp
 # Compile the Java source files (optional if not already compiled)
 RUN javac my/edu/utar/*.java
 
-# Run the main class of the application
+# Run the main class of the application.
 CMD ["java", "my.edu.utar.App"]
