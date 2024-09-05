@@ -1,34 +1,24 @@
 
 
 // Configure the test task
-tasks.withType(Test) {
-    useJUnitPlatform() // Ensure tests are run with JUnit Platform
-    finalizedBy jacocoTestReport // Generate the coverage report after tests
+test {
+    // Specify the directory containing test classes
+    testClassesDirs = sourceSets.test.output.classesDirs
+
+    // Optionally configure test options
+    testLogging {
+        // Configure which events to log during test execution
+        events 'passed', 'skipped', 'failed'
+    }
+    finalizedBy jacocoTestReport
 }
 
-// Configure the JaCoCo test report task
 jacocoTestReport {
-    dependsOn test // Ensure tests are run before generating the report
-
+    dependsOn test
     reports {
-        xml.required.set(true)  // Generate XML report for CI tools
-        html.required.set(true) // Generate HTML report
+        xml.required = true
+        html.required = true
     }
 }
 
-// Configure the testing suite
-testing {
-    suites {
-        // Configure the built-in test suite
-        test {
-            // Use JUnit 4 test framework
-            useJUnit('4.13.2')
-            
-            // Configure test logging
-            testLogging {
-                events 'passed', 'skipped', 'failed'
-                showStandardStreams = true
-            }
-        }
-    }
 }
