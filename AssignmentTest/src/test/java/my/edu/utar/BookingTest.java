@@ -82,7 +82,7 @@ public class BookingTest {
         waitingList.addWaiting(user);
 
         // Call the cancelBooking method with the mock waiting list
-        booking.cancelBooking(waitingList);;
+        booking.cancelBooking(waitingList);
 
         // Verify that the removeWaiting method was called with the expected user
         verify(waitingList).removeWaiting(user);
