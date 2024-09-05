@@ -4,28 +4,28 @@
 
 1. Go to this website to download Eclipse:
 https://www.eclipse.org/downloads/
-   - **Using Eclipse will be much easier to perfome testing compare to other compiler.**
-   - The link below contains the guideline to complete the downloading process : https://www.eclipse.org/downloads/packages/installer
+   - **Using Eclipse will make it much easier to perform testing compare to other compilers.**
+   - The link below contains the guidelines to complete the downloading process: https://www.eclipse.org/downloads/packages/installer
 
 2. Go to  this website to download VMware:
 https://www.vmware.com/info/workstation-player/evaluation
-   - **VMware is a vitual machine is a virtualization and cloud computing software provider.** 
-User can us VMware to gain asses to Windows10 to Windows 11.
-   - The link below contains the guideline to install and use VMware:
+   - **VMware is a virtual machine virtualization and cloud computing software provider.** 
+Users can use VMware to gain access from Windows 10 to Windows 11.
+   - The link below contains the guidelines for installing and using VMware:
 https://www.youtube.com/watch?v=cygsGM5sNJo
 
 # Prerequisite
 **Junit4 and Jar files must be installed and set up properly**
-For the following process, please refer to **Set Up The Enviroment**.
+Please refer to **Set Up The Enviroment**for for the following process.
 
 # Set Up
 1. Download all the files provided onto your desktop.
 2. Open your Eclipse.
 3. On the top left-hand corner, you can see **File**; click on it.
 4. Next, click on **import**.
-5. Click **Next** and choose **Browse**. (This will lead you into your directory and select the folder you had downloaded just now.)
+5. Click **Next** and choose **Browse**. (This will lead you into your directory and select the folder you downloaded just now.)
 6. Click **Finish**.
-7. Now you can see the project file on the right-hand side in Eclipse.
+7. You can see the project file on the right-hand side in Eclipse.
 
 **Reminder**
 1. If your library dependency is below JAVA-SE18, you have to change to Java System Libary (JAVA SE-20).
@@ -35,24 +35,24 @@ For the following process, please refer to **Set Up The Enviroment**.
 
 # Test Description
 
-Junit is a widely used testing framework for Java programming. It helps developers swrite and run tests for their code, ensuring that individual units of functionality work as intended.
+Junit is a widely used testing framework for Java programming. It helps developers write and run tests for their code, ensuring that individual units of functionality work as intended.
 
 ## Installed jar files
 1.	Provide the jar file
-2.	Install the jar file on your own laptop or PC it will be use after this.
+2.	Install the jar file on your laptop or PC it will be used after this.
 
 ## Set Up The Environment
 1.	Eclipse contains the JUnit package to create a JUnit test.
 
-2.	The library can be added during the creation of class using the wizard. If we want to add it later, **right-click** on project name in the packages explorer and select **Build Path -> Add Libraries**.
+2.	The library can be added during the creation of class using the wizard. If we want to add it later, **right-click** on the project name in the packages explorer and select **Build Path -> Add Libraries**.
 
 3.	Select the JUnit from the list. Then, click **[Next]**
 
-4. Select JUnit 4 and then **[Finish]**, You should see the JUnit library has been added into the project in the package explorer.
+4. Select JUnit 4 and then **[Finish]**, You should see the JUnit library has been added to the project in the package explorer.
 
-5. The **jar file** can be added during the creation of class using the wizard. If we want to add it later, right-click on project name in the package explorer and select confugure build path.
+5. The **jar file** can be added during the creation of class using the wizard. If we want to add it later, right-click on the project name in the package explorer and select configure build path.
 
-6.	Select Add External JARs at **right hand side.**
+6.	Select Add External JARs at **right-hand side.**
 
 7.	Select **All** the jar file on your desktop file, then click **open**.
 
@@ -60,14 +60,14 @@ Junit is a widely used testing framework for Java programming. It helps develope
 
 9.	You also may check the library and jar file that are added on the left-hand side.
 
-10.	Once we set up the testing environment , we are able to conduct unit testing, integration testing and test suite
+10.	Once we set up the testing environment, we can conduct unit testing, integration testing, and test suite.
 
 ## Unit Test
 Unit testing is a software testing technique where individual components or functions of a program are tested in isolation to ensure they work as expected. These tests are typically automated and focus on verifying the correctness of specific parts of the code, often called "units."
 
 1.	The @RunWith(JUnitParamsRunner.class) annotation is used in JUnit testing to specify a custom runner class that will execute the test class. In this case, the JUnitParamsRunner is a runner provided by the JUnitParams library, which is used to support parameterized tests in JUnit.
 
-2.	To make the method will run in test, there must be an @Test before the method.
+2.	To make the method run in the test, there must be an @Test before the method.
 
 3.	Example code:
 ```java
@@ -92,65 +92,6 @@ Unit testing is a software testing technique where individual components or func
 
 ![image](https://github.com/user-attachments/assets/4b46a6af-b0c7-4946-82e0-0427e81fe3fd)
 
-## Integration Test
-1.	The @RunWith(JUnitParamsRunner.class) annotation is used in JUnit testing to specify a custom runner class that will execute the test class. In this case, the JUnitParamsRunner is a runner provided by the JUnitParams library, which is used to support parameterized tests in JUnit.
-
-2.	To run the integration test , we will using mockito, it is required to include the jar_files posted above to carry out the testing.
-
-```java
-	@Test(expected=IllegalArgumentException.class)
-	@Parameters({
-		//numRoomsToBook,expectedVipRoomCount,expectedDeluxeRoomCount,expectedStandardRoomCount
-		"marry, VIP, false,4",
-	    "jerry, VIP, false,-2",
-	    "janice, NORMAL, false,3",
-	    "siti, NON_MEMBER, false,2",
-	})
-	public void testInvalidSetBooking(String username, String memberType, boolean reward, int numBook) {
-	    // Create a user with an invalid type
-	    User user = new User(username,memberType,reward);
-
-	    // Create a Booking instance with the invalid user
-	    Booking booking = new Booking(user);
-	    
-	    // Create mocks for WaitingList and Room
-	    WaitingList waitingList = new WaitingList();
-	    Room mockRoom = mock(Room.class);
-
-	    // Attempt to book rooms with the invalid user, which should throw an IllegalArgumentException
-	    booking.setBooking(numBook, mockRoom, waitingList);
-	}
-	@Test
-	@Parameters({
-	    "juanhong, VIP, false,0,0,0",
-	    "janice, NORMAL, false,0,0,0",
-	    "siti, NON_MEMBER, false,0,0,0",
-
-	})
-    public void testCancelBooking(String username, String userType, boolean rewardStatus,
-    		 int expectedVipWaitingListCount,int expectedStandardWaitingListCount, int expectedDeluxeWaitingListCount) {
-        // Create a user for the booking
-        User user = new User(username, userType, rewardStatus);
-        
-        // Create a WaitingList object
-        WaitingList waitingList = new WaitingList();
-        
-        // Add the user to the waiting list
-        waitingList.addWaiting(user);
-        
-        // Create a Booking object
-        Booking booking = new Booking(user);
-        
-        // Call the cancelBooking method
-        booking.cancelBooking(waitingList);
-        
-        // Verify that the waiting list no longer contains the user
-	    assertEquals(expectedVipWaitingListCount, waitingList.getVipWaitingList().size());
-	    assertEquals(expectedDeluxeWaitingListCount, waitingList.getMemberWaitingList().size());
-	    assertEquals(expectedStandardWaitingListCount, waitingList.getNormalWaitingList().size());
-	    }
-
-```
 ## Additional Notes
 There are other testing classes and you can explore them! Good Luck!
 
@@ -166,44 +107,109 @@ There are other testing classes and you can explore them! Good Luck!
 Steps:
 1.	Navigate to the project directory
 -	Open command prompt
--	Use cd to navigate ‘SoftwareTestingAssignment’ directory
--	cd path\to\SoftwareTestingAssignment
-
-2.	Create the ‘build.gradle’ file
--	Use text editor like notepad to create the ‘build.gradle’ file
--	Write the below code in the ‘build.gradle’ file
--	![image](https://github.com/user-attachments/assets/bb8a8f23-19e5-44b4-8451-78df6ffc44cd)
--	After done enter the code, save the file in the ‘SoftwareTestingAssignment’ directory
+-	Use cd to navigate the 'HotelManagementSystem' directory
+-	cd path\to\HotelManagementSystem
   
-3.	Directory structure
--	Ensure the ‘SoftwareTestingAssignment’’ directory has the following structure
--	![image](https://github.com/user-attachments/assets/53358749-3642-4456-8b43-90acb6f2dd0e)
--	Command for use check the project directory (dir build.gradle OR dir)
-  
-4.	Run Gradle command
+2.	Run Gradle command
 -	gradle init
--	（a)Select Application as type of build and
--	 (b)Select the implementation language as Java.
--	 (c)Then, enter the appropriate Java version (max 21)
--	 (d)Select single application project as application structure.
--	 (e)Select Kotlin as build script DSL
--	 (f)select J Unit 4 for the test framework.
+-	（a)Select Basic as type of build and
+-	 (b)Enter your project name
+-	 (c)Select Groovy
+-	 (d)Choose if you want to generate build using new APIs and behavior
   
-5.	Compile code
--	gradle build
+3.	Compile code
+-	Paste the below code into build.gradle.
+```
+apply plugin: 'java'
+apply plugin:'jacoco'
+jacoco {
+    toolVersion = "0.8.7"
+}
 
-6. 	Run the test
--	gradle test
+apply from: 'test.gradle'
 
-# Deployment
-How to deploy the JAVA program on the GitHub by using Git
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+    flatDir {
+        dirs 'jar_files/jar_files'
+    }
+}
+
+dependencies {
+    // This dependency is used by the application.
+    testImplementation 'junit:junit:4.13.2'
+
+    // Include local JAR files
+    testImplementation name: 'byte-buddy-1.12.8'
+    testImplementation name: 'byte-buddy-agent-1.12.8'
+    testImplementation name: 'JUnitParams-1.0.2'
+    testImplementation name: 'mockito-core-4.4.0'
+    testImplementation name: 'objenesis-3.2'
+}
+
+testing {
+    suites {
+        // Configure the built-in test suite
+        test {
+            // Use JUnit4 test framework
+            useJUnit('4.13.2')
+        }
+    }
+}
+```
+-	Then run 'gradle build' in command prompt.
+
+4. 	Run the test
+-	Paste the below code in test.gradle.
+```
+// Configure the test task
+test {
+    // Specify the directory containing test classes
+    testClassesDirs = sourceSets.test.output.classesDirs
+
+    // Optionally configure test options
+    testLogging {
+        // Configure which events to log during test execution
+        events 'passed', 'skipped', 'failed'
+    }
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+```
+-	Then run 'gradle test' in command prompt.
+
+# Deployment Automation
+How to deploy the JAVA program on Docker
 
 Steps
-1. Downlaod Git from official website
-   https://git-scm.com/download/win .
-2. Set up the Git  which you can find git bash in your Start menu after installation.
-3. Set Up your name and email address, which will be used for commit messages .
-4. Run these commands in Git Bash:
+1. Downlaod Docker from official website
+   https://docs.docker.com/desktop/
+   <img width="638" alt="Screenshot 2024-09-05 at 10 43 53 AM" src="https://github.com/user-attachments/assets/9ba04a03-60b4-4a5e-9d58-b37609971fc7">
+3. Create file called 'Dockerfile' in your repository.
+4. Type in according to the below code into the Dockerfile.
+
+<img width="385" alt="image" src="https://github.com/user-attachments/assets/76b4f0dc-278d-457f-8441-efff4f6806d6">
+
+6. Run commmand “docker build -t hotelmanagement:1.0”.
+7. Run command "docker run -d --name hotelmanagement-container -p 8083:8080 hotelmanagement:1.0".
+8. The container should now visible in your Docker app.
+
+9. Run these commands in Git Bash:
 ```
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
