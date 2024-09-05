@@ -5,20 +5,40 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/8.9/userguide/building_java_projects.html in the Gradle documentation.
  * This project uses @Incubating APIs which are subject to change.
  */
-
-plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
-    id 'application'
+// Apply a specific Java toolchain to ease working on different environments.
+apply plugin: 'java'
+apply plugin:'jacoco'
+jacoco {
+    toolVersion = "0.8.7"
 }
+
+apply from: 'test.gradle'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    flatDir {
+        dirs 'jar_files/jar_files'
+    }
 }
 
 dependencies {
     // This dependency is used by the application.
-    implementation libs.guava
+    testImplementation 'junit:junit:4.13.2'
+
+    // Include local JAR files
+    testImplementation name: 'byte-buddy-1.12.8'
+    testImplementation name: 'byte-buddy-agent-1.12.8'
+    testImplementation name: 'JUnitParams-1.0.2'
+    testImplementation name: 'mockito-core-4.4.0'
+    testImplementation name: 'objenesis-3.2'
 }
 
 testing {
@@ -31,14 +51,5 @@ testing {
     }
 }
 
-// Apply a specific Java toolchain to ease working on different environments.
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(20)
-    }
-}
 
-application {
-    // Define the main class for the application.
-    mainClass = 'org.example.App'
-}
+
